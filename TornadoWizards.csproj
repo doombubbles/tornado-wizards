@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <RootNamespace>TornadoWizards</RootNamespace>
+        <Configurations>Debug;Release</Configurations>
+        <Nullable>enable</Nullable>
+        <AssemblyName>TornadoWizards</AssemblyName>
+        <LangVersion>latest</LangVersion>
+        <Optimize>False</Optimize>
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
+
+    <Import Project="..\btd6.targets" />
+
+    <ItemGroup>
+        <Reference Include="PathsPlusPlus">
+            <HintPath>$(BloonsTD6)\Mods\PathsPlusPlus.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+    
+    <ItemGroup>
+        <EmbeddedResource Remove="Screenshot.png" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Content Include=".github\workflows\build.yml" />
+    </ItemGroup>
+</Project>
