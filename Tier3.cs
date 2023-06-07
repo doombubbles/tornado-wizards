@@ -21,13 +21,15 @@ public class SummonWhirlwind : UpgradePlusPlus<TornadoWizardPath>
     public override void ApplyUpgrade(TowerModel towerModel, int tier)
     {
         var druid = Game.instance.model.GetTower(TowerType.Druid, tier);
-        var tornado = druid.GetAttackModel().weapons.First(w => w.name == "WeaponModel_Tornado").Duplicate();
-        tornado.animation = 1;
+        var tornado = druid.GetAttackModels().First(model => model.name.Contains("Tornado")).Duplicate();
+        tornado.weapons[0].animation = 1;
         if (towerModel.appliedUpgrades.Contains(UpgradeType.MonkeySense))
         {
             tornado.GetDescendants<FilterInvisibleModel>().ForEach(model => model.isActive = false);
         }
 
-        towerModel.GetAttackModel().AddWeapon(tornado);
+        tornado.range = towerModel.range;
+
+        towerModel.AddBehavior(tornado);
     }
 }
