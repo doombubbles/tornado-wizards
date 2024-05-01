@@ -2,8 +2,8 @@ namespace TornadoWizards;
 
 public static class ModHelperData
 {
-    public const string WorksOnVersion = "37.0";
-    public const string Version = "1.0.1";
+    public const string WorksOnVersion = "42.1";
+    public const string Version = "1.0.2";
     public const string Name = "Tornado Wizards";
 
     public const string Description =
