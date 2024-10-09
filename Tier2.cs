@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using BTD_Mod_Helper.Api.Enums;
 using BTD_Mod_Helper.Extensions;
 using Il2Cpp;
@@ -20,7 +21,7 @@ public class LightningBolt : UpgradePlusPlus<TornadoWizardPath>
 
     public override void ApplyUpgrade(TowerModel towerModel, int tier)
     {
-        var druid = Game.instance.model.GetTower(TowerType.Druid, tier);
+        var druid = Game.instance.model.GetTower(TowerType.Druid, Math.Min(tier, 5));
         var lightning = druid.GetAttackModel().weapons.First(w => w.name == "WeaponModel_Lightning").Duplicate();
         lightning.animation = 1;
         lightning.projectile.GetDamageModel().immuneBloonProperties &= ~BloonProperties.Purple;

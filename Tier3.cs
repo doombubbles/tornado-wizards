@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using BTD_Mod_Helper.Api.Enums;
 using BTD_Mod_Helper.Extensions;
 using Il2CppAssets.Scripts.Models.Towers;
@@ -20,7 +21,7 @@ public class SummonWhirlwind : UpgradePlusPlus<TornadoWizardPath>
 
     public override void ApplyUpgrade(TowerModel towerModel, int tier)
     {
-        var druid = Game.instance.model.GetTower(TowerType.Druid, tier);
+        var druid = Game.instance.model.GetTower(TowerType.Druid, Math.Min(tier, 5));
         var tornado = druid.GetAttackModels().First(model => model.name.Contains("Tornado")).Duplicate();
         tornado.weapons[0].animation = 1;
         if (towerModel.appliedUpgrades.Contains(UpgradeType.MonkeySense))

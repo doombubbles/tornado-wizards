@@ -1,1 +1,2 @@
-- Fixed for BTD6 v37.0
+- Fixed for BTD6 v45
+- Added a Mod Option for using Ball Lighting as the 4th path upgrade instead of the custom Electric Overload

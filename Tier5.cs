@@ -13,10 +13,13 @@ namespace TornadoWizards;
 
 public class TempestTornado : UpgradePlusPlus<TornadoWizardPath>
 {
-    public override int Cost => 50000;
     public override int Tier => 5;
     public override string Icon => VanillaSprites.SuperStormUpgradeIcon;
     public override string Portrait => "Wizard5";
+
+    public override int Cost => TornadoWizardsMod.BallLightning
+        ? Game.instance.model.GetUpgrade(UpgradeType.Superstorm).cost
+        : 50000;
 
     public override string Description => "The tempest blows more Bloons faster, further, and more often.";
 
@@ -25,14 +28,22 @@ public class TempestTornado : UpgradePlusPlus<TornadoWizardPath>
         var druid = Game.instance.model.GetTower(TowerType.Druid, 5);
         var tornado = druid.GetAttackModel().weapons.First(w => w.name.Contains("Superstorm")).Duplicate();
         tornado.animation = 1;
-        tornado.projectile.RemoveBehavior<CreateProjectileOnIntervalModel>();
-        tornado.GetDescendants<DamageModel>().ForEach(model => model.immuneBloonProperties &= ~BloonProperties.Purple);
+        
+        if (!TornadoWizardsMod.BallLightning)
+        {
+            tornado.projectile.RemoveBehavior<CreateProjectileOnIntervalModel>();
+        }
+
+        tornado.GetDescendants<DamageModel>()
+            .ForEach(model => model.immuneBloonProperties &= ~BloonProperties.Purple);
+        
         if (towerModel.appliedUpgrades.Contains(UpgradeType.MonkeySense))
         {
             tornado.GetDescendants<FilterInvisibleModel>().ForEach(model => model.isActive = false);
         }
+
         towerModel.GetAttackModel().AddWeapon(tornado);
-        
+
         if (IsHighestUpgrade(towerModel))
         {
             towerModel.display = towerModel.GetBehavior<DisplayModel>().display =
